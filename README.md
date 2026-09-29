@@ -49,6 +49,11 @@ and its contributors. This project would not exist without it.
 - Fixed item amount and durability edits being silently dropped or reverted
 - Fixed the item detail panel being clipped instead of scrollable
 
+**Made with AI assistance** — the updates in this fork were written with
+[opencode](https://opencode.ai) using its Space Bunny model. It did the code changes, the save
+round-trip verification in a real browser, and the game-data pipeline work. The design decisions,
+the licensing choices and the publishing were done by the maintainer.
+
 **License** — [GPL-3.0](./LICENSE), inherited from the original project. A modified work under the
 GPL must stay under the GPL, keep the original copyright notices, and state that it was changed.
 

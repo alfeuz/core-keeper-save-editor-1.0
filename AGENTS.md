@@ -21,6 +21,8 @@ Licensed under **GPL-3.0**, inherited from the original. Three consequences for 
   `https://alfeuz.github.io/core-keeper-save-editor-1.0`. The path segment
   `core-keeper-save-editor-1.0` is hardcoded in `package.json` (`build:github.io`) and in the
   `og:`/`twitter:` meta tags in `src/index.html`. Change all of them together.
+- Work in this fork is done with opencode's Space Bunny model. That attribution is stated in
+  `README.md` (§Credits) and must not be dropped from future commits.
 
 ---
 
