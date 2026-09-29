@@ -38,18 +38,23 @@ export class ItemDataService {
       return null;
     }
     const paddedObjectId = objectId.toString().padStart(4, '0');
-    const { name, description, rarity, initialAmount, isStackable, damage, cooldown } = item;
+    const { name, description, rarity, initialAmount, isStackable, cooldown } = item;
     const rarityColor = this.getRarityColor(item.rarity);
     const whenEquipped = item.whenEquipped;
     const conditionsWhenEquipped = whenEquipped
       ? this.conditionDataService.transformConditionIdsToLabel(whenEquipped, 'item', true)
       : undefined;
 
-    if (damage) {
-      damage.reinforcementBonus = Math.round(
-        (damage.range[0] + (damage.range[1] - damage.range[0]) / 2) * 0.15
-      );
-    }
+    // Build a copy instead of writing the bonus onto the imported item data, which is shared by
+    // every slot that shows the same item.
+    const damage = item.damage
+      ? {
+          ...item.damage,
+          reinforcementBonus: Math.round(
+            (item.damage.range[0] + (item.damage.range[1] - item.damage.range[0]) / 2) * 0.15
+          )
+        }
+      : undefined;
 
     return {
       objectId,

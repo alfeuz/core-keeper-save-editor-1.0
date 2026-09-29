@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { SkillTalentService } from 'src/app/services/skill-talent.service';
 import { Character, Skill } from '~models';
-import { CharacterService } from '~services';
+import { CharacterService, SkillTalentService } from '~services';
 
 @UntilDestroy()
 @Component({
@@ -36,21 +35,11 @@ export class SkillListComponent implements OnInit {
   }
 
   onLevelIncreaseClick(): void {
-    this.setSelectedSkillLevel(
-      this.skillTalentService.getLevelByXp(
-        this.selectedSkillID,
-        this.skills[this.selectedSkillID].value
-      ) + 1
-    );
+    this.setSelectedSkillLevel(this.getSkillLevel(this.selectedSkillID) + 1);
   }
 
   onLevelDecreaseClick(): void {
-    this.setSelectedSkillLevel(
-      this.skillTalentService.getLevelByXp(
-        this.selectedSkillID,
-        this.skills[this.selectedSkillID].value
-      ) - 1
-    );
+    this.setSelectedSkillLevel(this.getSkillLevel(this.selectedSkillID) - 1);
   }
 
   onLevelInputChange(event): void {
@@ -59,10 +48,10 @@ export class SkillListComponent implements OnInit {
 
   setSelectedSkillLevel(level: number): void {
     const newLevel = level < 100 ? (level > 0 ? level : 0) : 100;
-    this.skills[this.selectedSkillID].value = this.skillTalentService.getXpForLevel(
-      this.selectedSkillID,
-      newLevel
-    );
+    const skill = this.skills?.find(s => s.skillID === this.selectedSkillID);
+    if (skill) {
+      skill.value = this.skillTalentService.getXpForLevel(this.selectedSkillID, newLevel);
+    }
 
     this.characterService.$character.next({ ...this.character, skills: this.skills });
 
@@ -75,6 +64,7 @@ export class SkillListComponent implements OnInit {
   }
 
   getSkillLevel(skillID: number): number {
-    return this.skillTalentService.getLevelByXp(skillID, this.skills[skillID].value);
+    const skill = this.skills?.find(s => s.skillID === skillID);
+    return this.skillTalentService.getLevelByXp(skillID, skill ? skill.value : 0);
   }
 }

@@ -58,19 +58,24 @@ export class TalentTreeComponent implements OnInit {
   private update() {
     if (!this.skills || !this.skillTalentTreeDatas || this.selectedSkillId == null) return;
 
-    const xp = this.skills.find(skill => skill.skillID === this.selectedSkillId).value;
+    const skill = this.skills.find(s => s.skillID === this.selectedSkillId);
+    const xp = skill ? skill.value : 0;
     this.selectedSkillLevel = this.skillTalentService.getLevelByXp(this.selectedSkillId, xp);
 
     this.selectedSkillTalentTree = this.skillTalentTreeDatas.find(
       tree => tree.skillTreeID === this.selectedSkillId
     );
 
-    const pointsLength = this.selectedSkillTalentTree.points.length;
-    if (pointsLength < 8) {
-      const diff = 8 - pointsLength;
-      for (let i = 0; i < diff; i++) {
-        this.selectedSkillTalentTree.points.push(0);
-      }
+    if (!this.selectedSkillTalentTree) {
+      this.selectedSkillTalentTree = {
+        skillTreeID: this.selectedSkillId,
+        points: [0, 0, 0, 0, 0, 0, 0, 0]
+      };
+      this.skillTalentTreeDatas.push(this.selectedSkillTalentTree);
+    }
+
+    while (this.selectedSkillTalentTree.points.length < 8) {
+      this.selectedSkillTalentTree.points.push(0);
     }
 
     this.updateBlocked();
@@ -97,17 +102,13 @@ export class TalentTreeComponent implements OnInit {
   }
 
   private updatePointsToSpend() {
-    const levelsForSkill =
-      this.selectedSkillLevel >= 100 ? 25 : Math.floor(this.selectedSkillLevel / 5);
-    const spentPoints = this.selectedSkillTalentTree.points.reduce((sum, point) => sum + point);
-    const pointsDif = levelsForSkill - spentPoints;
-
-    if (pointsDif < 0) {
-      this.onResetButtonClick();
-      this.pointsToSpend = levelsForSkill;
-      return;
+    let totalPoints = Math.floor(this.selectedSkillLevel / 5);
+    if (totalPoints >= 20) {
+      totalPoints += 5;
     }
+    const spentPoints = this.selectedSkillTalentTree.points.reduce((sum, point) => sum + point, 0);
+    const pointsDif = totalPoints - spentPoints;
 
-    this.pointsToSpend = pointsDif;
+    this.pointsToSpend = Math.max(0, pointsDif);
   }
 }

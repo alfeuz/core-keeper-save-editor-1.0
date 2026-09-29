@@ -1,3 +1,15 @@
 :host {
-  @apply flex gap-8 h-full;
+  @apply flex gap-8 h-full min-h-0 overflow-hidden;
+}
+
+/*
+  The inventory and the item detail share this column. The detail panel grows with the item it
+  shows, so the column has to scroll once it no longer fits. `flex-shrink-0` keeps the column at
+  its content width, and min-h-0 lets it shrink below the content height so the scrollbar appears
+  instead of the text being clipped by the page.
+*/
+.detail-column {
+  @apply flex flex-col gap-8 min-h-0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

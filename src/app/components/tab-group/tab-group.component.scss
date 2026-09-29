@@ -1,5 +1,5 @@
 :host {
-  @apply p-6 block h-full flex flex-col;
+  @apply p-6 block h-full flex flex-col min-h-0 overflow-hidden;
 }
 
 .nav-item {

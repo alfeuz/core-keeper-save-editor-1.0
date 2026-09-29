@@ -2,6 +2,11 @@
 
 A big welcome and thank you for considering contributing to **Core Keeper Save Editor**!
 
+> This repository is a community-maintained fork of
+> [halilbahar/core-keeper-save-editor](https://github.com/halilbahar/core-keeper-save-editor/).
+> Please raise issues and pull requests **here**, not on the original repository, which is
+> unmaintained. Contributions are licensed under the GPL-3.0, the same terms as the original.
+
 Reading and following these guidelines will help us make the contribution process easy and effective for everyone involved. It also communicates that you agree to respect the time of the developers managing and developing this open source project. In return, we will reciprocate that respect by addressing your issue, assessing changes, and helping you finalize your pull requests.
 
 ## Getting Started

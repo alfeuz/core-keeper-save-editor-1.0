@@ -1,6 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
-
-import { SkillTalentService } from 'src/app/services/skill-talent.service';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-skill',
@@ -18,8 +16,6 @@ export class SkillComponent {
   @HostBinding('class.maxed')
   @Input()
   maxed: boolean = false;
-
-  constructor(private skillTalentService: SkillTalentService) {}
 
   @Input() set skillID(value) {
     this._skillID = value;

@@ -49,7 +49,8 @@
       [value]="this.inventorySlot.amount"
       (change)="this.onAmountChange($event)" />
     /
-    {{ this.itemDetail.isStackable ? 999 : this.itemDetail.initialAmount }}
+    {{ this.itemDetail.isStackable ? 999 : this.maxDurability }}
+    <span *ngIf="this.amountError" class="text-red-400 ml-2">{{ this.amountError }}</span>
   </div>
   <button class="mt-4" (click)="this.onDeleteButtonClick()">Remove</button>
 </app-card>

@@ -3,7 +3,7 @@ name: Missing items(s) report
 about: Report the absence of an item
 title: ''
 labels: missing-item
-assignees: halilbahar
+assignees: alfeuz
 ---
 
 **Name of the item(s)**

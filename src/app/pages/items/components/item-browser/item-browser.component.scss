@@ -1,0 +1,7 @@
+:host {
+  @apply block h-full max-h-full min-h-0 overflow-hidden flex-shrink-0;
+}
+
+app-card {
+  @apply h-full block overflow-y-auto;
+}

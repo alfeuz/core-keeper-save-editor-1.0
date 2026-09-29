@@ -36,7 +36,8 @@ export class ConditionDataService {
         const tenthValueString = prefix + condition.value / 10;
         const valueString = prefix + condition.value;
 
-        const templateContainsPercentage = conditionStringTemplate.match(/(?<=\{0:[0-3]})%/);
+        // Matches the same as a lookbehind would, but is supported by older browsers (Safari < 16.4)
+        const templateContainsPercentage = /\{0:[0-3]}%/.test(conditionStringTemplate);
         const reinforcementBonusValueString = prefix + Math.round(condition.value * 0.15);
         const tenthReinforcementBonusValueString = prefix + Math.round(condition.value * 0.15) / 10;
         const reinforcementBonusStringTemplate = `(${templateFillIn[0]}${

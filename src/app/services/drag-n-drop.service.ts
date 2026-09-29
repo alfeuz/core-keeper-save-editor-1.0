@@ -11,7 +11,13 @@ import { BehaviorSubject } from 'rxjs';
 import { ItemCategories } from '~enums';
 import { InventorySlot, ItemData } from '~models';
 
-import { CharacterService } from './character.service';
+import {
+  BAG_SLOT,
+  BAG_SLOTS,
+  CharacterService,
+  FIRST_EQUIPMENT_SLOT,
+  TOOLBAR_SLOTS
+} from './character.service';
 import { ItemDataService } from './item-data.service';
 
 @Injectable({
@@ -19,15 +25,18 @@ import { ItemDataService } from './item-data.service';
 })
 export class DragNDropService {
   private readonly regex = /inventory-(\d+)/;
+  /** The drop list that holds the equipped bag, which decides the size of the bag window. */
+  private readonly bagDropListId = `inventory-${BAG_SLOT}`;
+  /** Has to cover every slot from FIRST_EQUIPMENT_SLOT up to and including the bag slot. */
   private readonly indexAllowedObjectTypes = {
-    51: ItemCategories.Helm,
+    [FIRST_EQUIPMENT_SLOT]: ItemCategories.Helm,
     52: ItemCategories.Necklace,
     53: ItemCategories.BreastArmor,
     54: ItemCategories.PantsArmor,
     55: ItemCategories.Ring,
     56: ItemCategories.Ring,
     57: ItemCategories.Offhand,
-    58: ItemCategories.Bag
+    [BAG_SLOT]: ItemCategories.Bag
   };
 
   $indexToHide: BehaviorSubject<number> = new BehaviorSubject(-1);
@@ -49,6 +58,12 @@ export class DragNDropService {
     let variation: number;
     let variationUpdateCount: number;
 
+    const prevMatch = event.previousContainer.id.match(this.regex);
+    const targetMatch = event.container.id.match(this.regex);
+    const prevIndex = prevMatch ? parseInt(prevMatch[1]) : -1;
+    const targetIndex = targetMatch ? parseInt(targetMatch[1]) : -1;
+    const character = this.characterService.$character.value;
+
     if (event.previousContainer.id.startsWith('inventory')) {
       // If the item came from the inventory, get the data from the data of the container and reset or swap the items
       objectID = event.previousContainer.data.objectID;
@@ -66,12 +81,47 @@ export class DragNDropService {
       event.previousContainer.data.amount = oldAmount;
       event.previousContainer.data.variation = oldVariation;
       event.previousContainer.data.variationUpdateCount = oldVariationUpdateCount;
+
+      // Swap parallel arrays if present
+      if (character && prevIndex >= 0 && targetIndex >= 0) {
+        if (character.inventoryObjectNames) {
+          const oldName = character.inventoryObjectNames[targetIndex] || '';
+          character.inventoryObjectNames[targetIndex] =
+            character.inventoryObjectNames[prevIndex] || '';
+          character.inventoryObjectNames[prevIndex] = oldName;
+        }
+        if (character.inventoryAuxData) {
+          const oldAux = character.inventoryAuxData[targetIndex] || { index: 0, data: '' };
+          character.inventoryAuxData[targetIndex] = character.inventoryAuxData[prevIndex] || {
+            index: 0,
+            data: ''
+          };
+          character.inventoryAuxData[prevIndex] = oldAux;
+        }
+        if (character.lockedObjects) {
+          const oldLock = character.lockedObjects[targetIndex] || false;
+          character.lockedObjects[targetIndex] = character.lockedObjects[prevIndex] || false;
+          character.lockedObjects[prevIndex] = oldLock;
+        }
+      }
     } else {
       // If the item came from the item-browser, get the data from the item as ItemData
       objectID = event.item.data.objectID;
       amount = event.item.data.initialAmount;
       variation = 0;
       variationUpdateCount = 0;
+
+      if (character && targetIndex >= 0) {
+        if (character.inventoryObjectNames) {
+          character.inventoryObjectNames[targetIndex] = event.item.data.objectName || '';
+        }
+        if (character.inventoryAuxData) {
+          character.inventoryAuxData[targetIndex] = { index: 0, data: '' };
+        }
+        if (character.lockedObjects) {
+          character.lockedObjects[targetIndex] = false;
+        }
+      }
     }
 
     event.container.data.objectID = objectID;
@@ -82,10 +132,10 @@ export class DragNDropService {
     // If the item is dropped the exit event never gets called, thus the index is still set. Reset it
     this.$indexToHide.next(-1);
 
-    // If the one of the item slots are the 58th one (bag) update the bag subject so we can adjust the inventory size
-    if (event.container.id === 'inventory-58') {
+    // If one of the item slots is the bag slot, update the bag subject so we can adjust the inventory size
+    if (event.container.id === this.bagDropListId) {
       this.characterService.$bag.next(event.container.data.objectID);
-    } else if (event.previousContainer.id === 'inventory-58') {
+    } else if (event.previousContainer.id === this.bagDropListId) {
       this.characterService.$bag.next(event.previousContainer.data.objectID);
     }
 
@@ -100,10 +150,9 @@ export class DragNDropService {
    * @param event CdkDragEnter Event
    */
   onEnter(event: CdkDragEnter<unknown>): void {
-    const id = event.container.id;
-    const regex = /inventory-(\d+)/;
-    const match = id.match(regex);
-    this.$indexToHide.next(+match[1]);
+    const match = event.container.id.match(this.regex);
+    // A drop list the editor does not own, the browser item list, has no index to hide
+    this.$indexToHide.next(match ? +match[1] : -1);
   }
 
   /**
@@ -151,15 +200,18 @@ export class DragNDropService {
    */
   InventoryEnterPredicate(): (drag: CdkDrag, drop: CdkDropList) => boolean {
     return (drag: CdkDrag<{ objectID: number }>, drop: CdkDropList<InventorySlot>) => {
-      // If the item comes from the item-browser (0 <= index <= 49), allow everything
-      const index = parseInt(drag.dropContainer.id.split('-')[1]);
-      if (0 <= index && index <= 49) return true;
+      const match = drag.dropContainer.id.match(this.regex);
+      // If the item comes from the item-browser, allow it
+      if (!match) return true;
+      const index = parseInt(match[1]);
+      // If from hotbar/backpack, allow
+      if (index >= 0 && index < TOOLBAR_SLOTS + BAG_SLOTS) return true;
+
       // If we are here this means that the item being dragged is from the Equipment slots.
       // We can instantly allow it if the itemslot is empty.
       if (drop.data.objectID === 0) return true;
 
       // Otherwise we need to see if they are allowed to swap
-
       const draggingItemType = this.indexAllowedObjectTypes[index];
       const dropItemData = this.itemDataService.getData(drop.data.objectID);
 

@@ -1,11 +1,22 @@
 {
   "name": "core-keeper-save-editor",
   "version": "1.4.4",
+  "description": "A web-based character save editor for Core Keeper",
+  "license": "GPL-3.0",
+  "author": "alfeuz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfeuz/core-keeper-save-editor-1.0.git"
+  },
+  "homepage": "https://alfeuz.github.io/core-keeper-save-editor-1.0/",
+  "bugs": {
+    "url": "https://github.com/alfeuz/core-keeper-save-editor-1.0/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:github.io": "ng build --base-href /core-keeper-save-editor/",
+    "build:github.io": "ng build --base-href /core-keeper-save-editor-1.0/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

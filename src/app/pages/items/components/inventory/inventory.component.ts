@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { fromEvent } from 'rxjs';
 
 import { Bag } from '~enums';
 import { InventorySlot } from '~models';
-import { CharacterService, DragNDropService, SelectedItemService } from '~services';
+import {
+  BAG_SLOTS,
+  CharacterService,
+  DragNDropService,
+  SelectedItemService,
+  TOOLBAR_SLOTS
+} from '~services';
 
 @UntilDestroy()
 @Component({
@@ -25,18 +32,20 @@ export class InventoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    document.addEventListener('keydown', (event: KeyboardEvent) => {
-      const { key } = event;
-      if (key === 'Backspace' || key === 'Delete') {
-        this.removeSelectedItem();
-      }
-    });
+    fromEvent<KeyboardEvent>(document, 'keydown')
+      .pipe(untilDestroyed(this))
+      .subscribe(event => {
+        const { key } = event;
+        if (key === 'Backspace' || key === 'Delete') {
+          this.removeSelectedItem();
+        }
+      });
 
     this.characterService.$bag.pipe(untilDestroyed(this)).subscribe(value => (this.bag = value));
     this.characterService.$character.pipe(untilDestroyed(this)).subscribe(value => {
-      // End is exclusive, thats is why we '+ 1'
-      this.inventoryToolbar = value.inventory.slice(0, 9 + 1);
-      this.inventory = value.inventory.slice(9 + 1, 49 + 1);
+      // The toolbar is always fully visible, the bag window is trimmed by the pipe below
+      this.inventoryToolbar = value.inventory.slice(0, TOOLBAR_SLOTS);
+      this.inventory = value.inventory.slice(TOOLBAR_SLOTS, TOOLBAR_SLOTS + BAG_SLOTS);
     });
 
     this.dragNDropService.$indexToHide

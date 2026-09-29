@@ -18,6 +18,7 @@ export class ItemDetailComponent implements OnInit {
   itemIndex: number;
   rarityLabel: string;
   isReinforced: boolean;
+  amountError: string;
 
   constructor(
     private characterService: CharacterService,
@@ -44,6 +45,7 @@ export class ItemDetailComponent implements OnInit {
           // Item may not exist in the item-data
           if (this.itemDetail != null) {
             this.inventorySlot = inventorySlot;
+            this.amountError = null;
             this.setBonusDetail = this.itemSetService.getSetBonusDetail(inventorySlot.objectID);
             this.itemIndex = index;
             this.rarityLabel = ItemRarity[this.itemDetail.rarity];
@@ -68,17 +70,29 @@ export class ItemDetailComponent implements OnInit {
     const traget = event.target as HTMLInputElement;
     const amount = parseInt(traget.value);
 
-    const { isStackable, initialAmount } = this.itemDetail;
-    const maxAmount = isStackable ? 999 : initialAmount;
+    const maxAmount = this.itemDetail.isStackable ? 999 : this.maxDurability;
 
-    if (Number.isNaN(amount) || amount <= 0 || amount > (isStackable ? maxAmount : maxAmount * 2)) {
+    if (!Number.isSafeInteger(amount) || amount <= 0 || amount > maxAmount) {
       // We can't cancel this event. So have to reset the value manually
       traget.value = '' + this.inventorySlot.amount;
+      this.amountError = `Enter a number between 1 and ${maxAmount}`;
     } else {
       this.inventorySlot.amount = amount;
+      this.amountError = null;
+      // Without this the new amount only lives in memory, so a page reload would drop it and the
+      // export would write the old value.
+      this.characterService.store();
     }
     this.isReinforced =
       !this.itemDetail.isStackable && this.inventorySlot.amount > this.itemDetail.initialAmount;
+  }
+
+  /**
+   * The highest durability an item can hold. A reinforced item holds up to twice the durability
+   * the item data lists, which is why the input accepts more than `initialAmount`.
+   */
+  get maxDurability(): number {
+    return Math.max((this.itemDetail?.initialAmount ?? 0) * 2, 0);
   }
 
   /**
@@ -97,5 +111,6 @@ export class ItemDetailComponent implements OnInit {
     this.inventorySlot = null;
     this.itemIndex = null;
     this.rarityLabel = null;
+    this.amountError = null;
   }
 }

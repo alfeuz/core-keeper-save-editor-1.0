@@ -67,7 +67,7 @@ export class ItemComponent {
         this.isReinforced = true;
       }
 
-      if (this) this.durabilityBarColor = this.mapColor(this.durabilityProgress);
+      this.durabilityBarColor = this.mapColor(this.durabilityProgress);
     }
 
     this.updateStyles();

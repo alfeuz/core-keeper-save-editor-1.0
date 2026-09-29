@@ -1,6 +1,11 @@
 <app-item-browser class="flex-shrink-0"></app-item-browser>
-<div class="flex flex-col gap-8" style="flex: 0" cdkDropListGroup>
-  <div class="flex gap-8">
+<!--
+  The inventory and the item detail share this column, and the detail grows with the item, so
+  the column scrolls itself. Without this the page clips the text, because the page itself does
+  not scroll.
+-->
+<div class="detail-column flex-shrink-0" cdkDropListGroup>
+  <div class="flex gap-8 flex-shrink-0">
     <app-inventory></app-inventory>
     <app-equipment></app-equipment>
   </div>

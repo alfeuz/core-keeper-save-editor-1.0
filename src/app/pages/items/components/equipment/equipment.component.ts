@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { InventorySlot } from '~models';
-import { CharacterService, DragNDropService, SelectedItemService } from '~services';
+import {
+  CharacterService,
+  DragNDropService,
+  FIRST_EQUIPMENT_SLOT,
+  LAST_EQUIPMENT_SLOT,
+  SelectedItemService
+} from '~services';
 
 @UntilDestroy()
 @Component({
@@ -23,9 +29,12 @@ export class EquipmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.characterService.$character
-      .pipe(untilDestroyed(this))
-      .subscribe(character => (this.equipmentSlots = character.inventory.slice(51, 58 + 1)));
+    this.characterService.$character.pipe(untilDestroyed(this)).subscribe(character => {
+      this.equipmentSlots = character.inventory.slice(
+        FIRST_EQUIPMENT_SLOT,
+        LAST_EQUIPMENT_SLOT + 1
+      );
+    });
 
     this.dragNDropService.$indexToHide
       .pipe(untilDestroyed(this))

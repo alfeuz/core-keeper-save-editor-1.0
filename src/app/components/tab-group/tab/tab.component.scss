@@ -1,4 +1,6 @@
 :host {
-  @apply flex-1;
-  min-height: 0;
+  @apply flex-1 h-full min-h-0 overflow-hidden;
+  &.hidden {
+    display: none !important;
+  }
 }

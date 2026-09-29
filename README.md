@@ -2,6 +2,12 @@
 
 A simple browser based **Save File Editor** for **Core Keeper**.
 
+> **This is a community-maintained fork.** The original project by
+> [halilbahar](https://github.com/halilbahar/core-keeper-save-editor/) has been unmaintained for
+> several years. This fork updates it for recent game versions and fixes data-loss bugs in the save
+> round trip. It is a modified work and remains licensed under the
+> [GPL-3.0](./LICENSE) — see [Credits](#credits) for the full attribution.
+
 ## Features
 
 **Core-Keeper-Save-Editor** alows you to comfortably edit various aspects of your character's **save-file** from your browser.
@@ -23,3 +29,27 @@ Set the **level** of each of the 9 skills and **distribute points** to talents i
 Edit character specific information, such as **Name**, **Hardcore-Status**, **Saveslot-Index** and **Obtained Souls**
 
 ![Inventory](./.github/assets/character.gif)
+
+### Editing Pets
+
+Read your pets, their level and XP, and see which talents they have invested.
+
+## Credits
+
+**Original work** — [halilbahar/core-keeper-save-editor](https://github.com/halilbahar/core-keeper-save-editor/)
+and its contributors. This project would not exist without it.
+
+**This fork** — maintained by [alfeuz](https://github.com/alfeuz). Changes made here include:
+
+- Regenerated item, condition, talent and soul data for current game versions
+- Added the Pets page, pet XP editing and per-variant talent icons
+- Added the three newer souls (Druidra, Crydra, Pyrdra)
+- Fixed save corruption: 64-bit appearance colours are no longer rounded on export, and every
+  edit is persisted before it can be lost
+- Fixed item amount and durability edits being silently dropped or reverted
+- Fixed the item detail panel being clipped instead of scrollable
+
+**License** — [GPL-3.0](./LICENSE), inherited from the original project. A modified work under the
+GPL must stay under the GPL, keep the original copyright notices, and state that it was changed.
+
+**Not affiliated with Pugstorm or Frozenbyte.** Core Keeper is a trademark of its respective owner.
