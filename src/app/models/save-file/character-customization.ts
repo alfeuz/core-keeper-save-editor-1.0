@@ -1,6 +1,6 @@
 import { CharacterName } from './character-name';
 
-export interface CharacterCostomization {
+export interface CharacterCustomization {
   name: CharacterName;
   gender: number;
   skinColor: number;

@@ -5,5 +5,7 @@ export enum Bag {
   ScarletShellBackpack = 8402,
   ExplorerBackpack = 8403,
   OctarineBag = 8404,
-  MorphasBubbleBag = 8405
+  MorphasBubbleBag = 8405,
+  SmallBackpack = 8406,
+  ScholarBackpack = 8407
 }

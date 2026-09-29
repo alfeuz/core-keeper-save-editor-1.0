@@ -49,9 +49,10 @@ if __name__ == '__main__':
         term = translation['term']
         translation_value = translation['value']
         if term.startswith('Conditions/'):
-            _, condition_name = term.split('/')
-            condition_id = condition_ids_enum[condition_name]
-            condition_id_to_translation[condition_id] = translation_value
+            parts = term.split('/')
+            if len(parts) == 2 and parts[1] in condition_ids_enum:
+                condition_id = condition_ids_enum[parts[1]]
+                condition_id_to_translation[condition_id] = translation_value
 
     condition_table_doc = UnityDocument.load_yaml(
         'dump/CoreKeeper/ExportedProject/Assets/Resources/ConditionsTable.asset'
@@ -62,17 +63,20 @@ if __name__ == '__main__':
     # Now that we have the ids -> text we can loop over the conditionsTable
     for conditions_category in mono_behaviour.conditionCategories:
         for condition in conditions_category['conditions']:
-            condition_id = condition['Id']
-            effect_id = condition['effect']
+            condition_id = int(condition['Id'])
+            effect_id = int(condition['effect'])
             # Ignore Null, ApplySnare, ImmuneToDamageAfterLogin, Charmed, ImmuneToCharm
             if condition_id in (0, 26, 187, 215, 213):
                 continue
 
-            id_to_use_same_desc = condition['useSameDescAsId']
+            id_to_use_same_desc = int(condition['useSameDescAsId'])
             if id_to_use_same_desc != 0:
-                condition_description = condition_id_to_translation[id_to_use_same_desc]
+                condition_description = condition_id_to_translation.get(id_to_use_same_desc)
             else:
-                condition_description = condition_id_to_translation[condition_id]
+                condition_description = condition_id_to_translation.get(condition_id)
+
+            if not condition_description:
+                continue
 
             # We will use result like in chmod with the binary numbers
             # x2 x1
@@ -92,7 +96,7 @@ if __name__ == '__main__':
             condition_description = condition_description.replace("{0}", "{0:%d}" % result)
             condition_results[condition_id] = {
                 'description': condition_description,
-                'isUnique': condition['isUnique'] == 1
+                'isUnique': int(condition['isUnique']) == 1
             }
 
     os.makedirs('out/conditions', exist_ok=True)

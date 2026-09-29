@@ -40,3 +40,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Tools & scripts extraction
+/tools
+/scripts/dump
+/scripts/out
+/scripts/.cache
+
+# Local dev helpers
+/inject.js
+/scripts/inject_save.py
+/sample_save

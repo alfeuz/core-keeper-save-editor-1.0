@@ -1,4 +1,4 @@
-import { CharacterCostomization } from './character-customization';
+import { CharacterCustomization } from './character-customization';
 import { Condition } from './condition';
 import { InventorySlot } from './inventory-slot';
 import { Server } from './server';
@@ -8,12 +8,16 @@ import { SkillTalentTree } from './skill-talent-tree';
 export interface Character {
   version: number;
   characterGuid: string;
-  characterCustomization: CharacterCostomization;
+  characterCustomization: CharacterCustomization;
+  characterCustomizationNew?: any;
   discoveredObjects: [];
   servers: Server[];
   skills: Skill[];
   activatedCrystals: [];
   inventory: InventorySlot[];
+  inventoryObjectNames?: string[];
+  inventoryAuxData?: { index: number; data: string }[];
+  lockedObjects?: boolean[];
   conditionsList: Condition[];
   hasUnlockedSouls: boolean;
   coinAmount: number;
@@ -25,4 +29,8 @@ export interface Character {
   discoveredBiomes: [];
   discoveredObjects2: InventorySlot[];
   disabledSoulPowers: [];
+  hasPlayedOutro?: boolean;
+  completedTutorials?: number[];
+  lastActiveSession?: any;
+  health?: number;
 }

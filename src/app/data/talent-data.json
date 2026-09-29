@@ -9,12 +9,18 @@
     },
     {
       "name": "Meticulous miner",
-      "increment": 5,
+      "increment": 3,
       "conditionId": 56,
       "tenth": false,
       "iconIndex": 1
     },
-    { "name": "Night vision", "increment": 2, "conditionId": 53, "tenth": false, "iconIndex": 2 },
+    {
+      "name": "Self-mending alloy",
+      "increment": 2,
+      "conditionId": 252,
+      "tenth": false,
+      "iconIndex": 2
+    },
     {
       "name": "Miner's strength",
       "increment": 2,
@@ -30,14 +36,26 @@
       "iconIndex": 4
     },
     {
-      "name": "Explosives engineer",
+      "name": "Explosions engineer",
       "increment": 4,
       "conditionId": 57,
       "tenth": false,
       "iconIndex": 5
     },
-    { "name": "Pick and run!", "increment": 4, "conditionId": 58, "tenth": false, "iconIndex": 6 },
-    { "name": "Archeologist", "increment": 2, "conditionId": 60, "tenth": true, "iconIndex": 7 }
+    {
+      "name": "Pick and run!",
+      "increment": 4,
+      "conditionId": 58,
+      "tenth": false,
+      "iconIndex": 6
+    },
+    {
+      "name": "Archaeologist",
+      "increment": 2,
+      "conditionId": 60,
+      "tenth": true,
+      "iconIndex": 7
+    }
   ],
   "1": [
     {
@@ -61,7 +79,13 @@
       "tenth": true,
       "iconIndex": 10
     },
-    { "name": "On your toes", "increment": 40, "conditionId": 74, "tenth": true, "iconIndex": 11 },
+    {
+      "name": "On your toes",
+      "increment": 40,
+      "conditionId": 74,
+      "tenth": true,
+      "iconIndex": 11
+    },
     {
       "name": "Escape artist",
       "increment": 10,
@@ -69,10 +93,16 @@
       "tenth": false,
       "iconIndex": 12
     },
-    { "name": "Keeping tempo", "increment": 30, "conditionId": 75, "tenth": true, "iconIndex": 13 },
+    {
+      "name": "Keeping tempo",
+      "increment": 30,
+      "conditionId": 75,
+      "tenth": true,
+      "iconIndex": 13
+    },
     {
       "name": "Encumbering presence",
-      "increment": -50,
+      "increment": -40,
       "conditionId": 77,
       "tenth": true,
       "iconIndex": 14
@@ -86,7 +116,13 @@
     }
   ],
   "2": [
-    { "name": "Quick strikes", "increment": 20, "conditionId": 51, "tenth": true, "iconIndex": 16 },
+    {
+      "name": "Quick strikes",
+      "increment": 20,
+      "conditionId": 51,
+      "tenth": true,
+      "iconIndex": 16
+    },
     {
       "name": "Building anger",
       "increment": 2,
@@ -101,7 +137,13 @@
       "tenth": false,
       "iconIndex": 18
     },
-    { "name": "Heavy swings", "increment": 3, "conditionId": 25, "tenth": false, "iconIndex": 19 },
+    {
+      "name": "Heavy swings",
+      "increment": 3,
+      "conditionId": 25,
+      "tenth": false,
+      "iconIndex": 19
+    },
     {
       "name": "Stubborn fighter",
       "increment": 30,
@@ -132,7 +174,13 @@
     }
   ],
   "3": [
-    { "name": "Maxed out!", "increment": 6, "conditionId": 115, "tenth": false, "iconIndex": 24 },
+    {
+      "name": "Maxed out!",
+      "increment": 6,
+      "conditionId": 115,
+      "tenth": false,
+      "iconIndex": 24
+    },
     {
       "name": "Strong and healthy",
       "increment": 20,
@@ -147,7 +195,13 @@
       "tenth": true,
       "iconIndex": 26
     },
-    { "name": "Stayin' alive", "increment": 2, "conditionId": 106, "tenth": true, "iconIndex": 27 },
+    {
+      "name": "Stayin' alive",
+      "increment": 2,
+      "conditionId": 106,
+      "tenth": true,
+      "iconIndex": 27
+    },
     {
       "name": "Healing potency",
       "increment": 6,
@@ -169,10 +223,22 @@
       "tenth": false,
       "iconIndex": 30
     },
-    { "name": "Cheat death", "increment": 2, "conditionId": 108, "tenth": false, "iconIndex": 31 }
+    {
+      "name": "Cheat death",
+      "increment": 2,
+      "conditionId": 108,
+      "tenth": false,
+      "iconIndex": 31
+    }
   ],
   "4": [
-    { "name": "Base builder", "increment": 6, "conditionId": 119, "tenth": false, "iconIndex": 32 },
+    {
+      "name": "Base builder",
+      "increment": 6,
+      "conditionId": 119,
+      "tenth": false,
+      "iconIndex": 32
+    },
     {
       "name": "The right tools in the right hands",
       "increment": 4,
@@ -187,7 +253,13 @@
       "tenth": false,
       "iconIndex": 34
     },
-    { "name": "Alchemist", "increment": 4, "conditionId": 120, "tenth": false, "iconIndex": 35 },
+    {
+      "name": "Alchemist",
+      "increment": 4,
+      "conditionId": 120,
+      "tenth": false,
+      "iconIndex": 35
+    },
     {
       "name": "Industry specialist",
       "increment": 1,
@@ -195,7 +267,13 @@
       "tenth": false,
       "iconIndex": 36
     },
-    { "name": "Blacksmith", "increment": 5, "conditionId": 123, "tenth": false, "iconIndex": 37 },
+    {
+      "name": "Blacksmith",
+      "increment": 5,
+      "conditionId": 123,
+      "tenth": false,
+      "iconIndex": 37
+    },
     {
       "name": "Jewelry crafter",
       "increment": 10,
@@ -203,10 +281,22 @@
       "tenth": false,
       "iconIndex": 38
     },
-    { "name": "Unbreakable", "increment": 60, "conditionId": 124, "tenth": true, "iconIndex": 39 }
+    {
+      "name": "Unbreakable",
+      "increment": 60,
+      "conditionId": 124,
+      "tenth": true,
+      "iconIndex": 39
+    }
   ],
   "5": [
-    { "name": "Rapid shots", "increment": 20, "conditionId": 52, "tenth": true, "iconIndex": 40 },
+    {
+      "name": "Rapid shots",
+      "increment": 20,
+      "conditionId": 52,
+      "tenth": true,
+      "iconIndex": 40
+    },
     {
       "name": "Keeping momentum",
       "increment": 2,
@@ -228,8 +318,20 @@
       "tenth": true,
       "iconIndex": 43
     },
-    { "name": "Charging in", "increment": 4, "conditionId": 92, "tenth": false, "iconIndex": 44 },
-    { "name": "Stun shot", "increment": 4, "conditionId": 102, "tenth": false, "iconIndex": 45 },
+    {
+      "name": "Charging in",
+      "increment": 4,
+      "conditionId": 92,
+      "tenth": false,
+      "iconIndex": 44
+    },
+    {
+      "name": "Stun shot",
+      "increment": 4,
+      "conditionId": 102,
+      "tenth": false,
+      "iconIndex": 45
+    },
     {
       "name": "Focused accuracy",
       "increment": 50,
@@ -261,9 +363,9 @@
       "iconIndex": 49
     },
     {
-      "name": "Bottomless water can",
-      "increment": 10,
-      "conditionId": 128,
+      "name": "Feast for the eyes",
+      "increment": 1,
+      "conditionId": 253,
       "tenth": false,
       "iconIndex": 50
     },
@@ -274,10 +376,16 @@
       "tenth": false,
       "iconIndex": 51
     },
-    { "name": "Thorny skin", "increment": 10, "conditionId": 21, "tenth": false, "iconIndex": 52 },
+    {
+      "name": "Thorny skin",
+      "increment": 10,
+      "conditionId": 21,
+      "tenth": false,
+      "iconIndex": 52
+    },
     {
       "name": "Poison coated weapons",
-      "increment": 5,
+      "increment": 3,
       "conditionId": 13,
       "tenth": false,
       "iconIndex": 53
@@ -289,13 +397,19 @@
       "tenth": false,
       "iconIndex": 54
     },
-    { "name": "Potent poison", "increment": 5, "conditionId": 130, "tenth": false, "iconIndex": 55 }
+    {
+      "name": "Potent poison",
+      "increment": 5,
+      "conditionId": 130,
+      "tenth": false,
+      "iconIndex": 55
+    }
   ],
   "7": [
     {
-      "name": "Angler's advantage",
-      "increment": 3,
-      "conditionId": 136,
+      "name": "Improved bait",
+      "increment": 5,
+      "conditionId": 133,
       "tenth": false,
       "iconIndex": 56
     },
@@ -307,9 +421,9 @@
       "iconIndex": 57
     },
     {
-      "name": "Improved bait",
-      "increment": 5,
-      "conditionId": 133,
+      "name": "Angler's advantage",
+      "increment": 2,
+      "conditionId": 180,
       "tenth": false,
       "iconIndex": 58
     },
@@ -320,11 +434,17 @@
       "tenth": false,
       "iconIndex": 59
     },
-    { "name": "Steady feet", "increment": 10, "conditionId": 137, "tenth": false, "iconIndex": 60 },
     {
-      "name": "Throwing expert",
+      "name": "Steady feet",
       "increment": 10,
-      "conditionId": 132,
+      "conditionId": 137,
+      "tenth": false,
+      "iconIndex": 60
+    },
+    {
+      "name": "Secure lures",
+      "increment": 5,
+      "conditionId": 254,
       "tenth": false,
       "iconIndex": 61
     },
@@ -351,7 +471,13 @@
       "tenth": false,
       "iconIndex": 64
     },
-    { "name": "Not so picky", "increment": 2, "conditionId": 139, "tenth": false, "iconIndex": 65 },
+    {
+      "name": "Not so picky",
+      "increment": 5,
+      "conditionId": 139,
+      "tenth": false,
+      "iconIndex": 65
+    },
     {
       "name": "Healthy diet",
       "increment": 20,
@@ -359,7 +485,13 @@
       "tenth": false,
       "iconIndex": 66
     },
-    { "name": "Fast food", "increment": 10, "conditionId": 141, "tenth": true, "iconIndex": 67 },
+    {
+      "name": "Fast food",
+      "increment": 10,
+      "conditionId": 141,
+      "tenth": true,
+      "iconIndex": 67
+    },
     {
       "name": "Long-lasting food",
       "increment": 6,
@@ -374,7 +506,13 @@
       "tenth": true,
       "iconIndex": 69
     },
-    { "name": "Master chef", "increment": 5, "conditionId": 80, "tenth": false, "iconIndex": 70 },
+    {
+      "name": "Master chef",
+      "increment": 5,
+      "conditionId": 80,
+      "tenth": false,
+      "iconIndex": 70
+    },
     {
       "name": "Sharing is caring",
       "increment": 1,
@@ -387,149 +525,173 @@
     {
       "name": "True sight",
       "increment": 1,
+      "conditionId": 12,
       "tenth": false,
       "iconIndex": 72
     },
     {
       "name": "Mana channeling",
-      "increment": 2,
-      "tenth": false,
-      "iconIndex": 73
-    },
-    {
-      "name": "Firmly grounded",
-      "increment": 5,
-      "tenth": false,
-      "iconIndex": 74
-    },
-    {
-      "name": "The best offense",
       "increment": 10,
-      "tenth": false,
-      "iconIndex": 75
+      "conditionId": 264,
+      "tenth": true,
+      "iconIndex": 73
     },
     {
       "name": "Arcane frenzy",
       "increment": 10,
+      "conditionId": 268,
+      "tenth": true,
+      "iconIndex": 74
+    },
+    {
+      "name": "The best offense",
+      "increment": 4,
+      "conditionId": 271,
+      "tenth": false,
+      "iconIndex": 75
+    },
+    {
+      "name": "Mental defense",
+      "increment": 20,
+      "conditionId": 373,
       "tenth": false,
       "iconIndex": 76
     },
     {
       "name": "Arcane transfusion",
-      "increment": 1,
+      "increment": 5,
+      "conditionId": 272,
       "tenth": false,
       "iconIndex": 77
     },
     {
       "name": "Fully charged",
       "increment": 6,
+      "conditionId": 273,
       "tenth": false,
       "iconIndex": 78
     },
     {
       "name": "Mana recharge",
       "increment": 6,
+      "conditionId": 269,
       "tenth": false,
       "iconIndex": 79
     }
   ],
   "10": [
     {
-      "name": "Ferocious creatures",
-      "increment": 4,
+      "name": "Efficient binding",
+      "increment": 8,
+      "conditionId": 257,
       "tenth": false,
       "iconIndex": 80
     },
     {
-      "name": "Critical command",
-      "increment": 4,
-      "tenth": false,
+      "name": "Ferocious creatures",
+      "increment": 40,
+      "conditionId": 277,
+      "tenth": true,
       "iconIndex": 81
     },
     {
-      "name": "Power in numbers",
-      "increment": 2,
+      "name": "Critical command",
+      "increment": 4,
+      "conditionId": 287,
       "tenth": false,
       "iconIndex": 82
     },
     {
       "name": "Trickle down arcana",
       "increment": 10,
-      "tenth": false,
+      "conditionId": 279,
+      "tenth": true,
       "iconIndex": 83
     },
     {
       "name": "Tough gang",
       "increment": 15,
-      "tenth": false,
+      "conditionId": 280,
+      "tenth": true,
       "iconIndex": 84
     },
     {
       "name": "Group effort",
       "increment": 2,
+      "conditionId": 278,
       "tenth": false,
       "iconIndex": 85
     },
     {
-      "name": "Longing for this world",
-      "increment": 10,
+      "name": "Heartbound horde",
+      "increment": 1,
+      "conditionId": 285,
       "tenth": false,
       "iconIndex": 86
     },
     {
-      "name": "Vengeful spirit",
+      "name": "Power in numbers",
       "increment": 1,
+      "conditionId": 275,
       "tenth": false,
       "iconIndex": 87
     }
   ],
   "11": [
     {
-      "name": "High velocity charge",
+      "name": "High Velocity Charge",
       "increment": 10,
+      "conditionId": 307,
       "tenth": false,
       "iconIndex": 88
     },
     {
-      "name": "Phantom bombs",
+      "name": "Phantom Bombs",
       "increment": 6,
+      "conditionId": 305,
       "tenth": false,
       "iconIndex": 89
     },
     {
-      "name": "Auto salvage",
+      "name": "Auto Salvage",
       "increment": 6,
+      "conditionId": 306,
       "tenth": false,
       "iconIndex": 90
     },
     {
-      "name": "Composite armor",
+      "name": "Composite Armor",
       "increment": 16,
+      "conditionId": 309,
       "tenth": false,
       "iconIndex": 91
     },
     {
-      "name": "Mana blast",
+      "name": "Mana Blast",
       "increment": 5,
+      "conditionId": 310,
       "tenth": false,
       "iconIndex": 92
     },
     {
-      "name": "Adrenaline rush",
+      "name": "Adrenaline Rush",
       "increment": 10,
-      "tenth": false,
+      "conditionId": 312,
+      "tenth": true,
       "iconIndex": 93
     },
     {
-      "name": "After burn",
+      "name": "After Burn",
       "increment": 10,
-      "tenth": false,
+      "conditionId": 314,
+      "tenth": true,
       "iconIndex": 94
     },
     {
       "name": "Napalm",
       "increment": 20,
-      "tenth": false,
+      "conditionId": 313,
+      "tenth": true,
       "iconIndex": 95
     }
   ]

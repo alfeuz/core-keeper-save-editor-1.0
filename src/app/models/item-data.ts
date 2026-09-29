@@ -1,5 +1,6 @@
 export interface ItemData {
   objectID: number;
+  objectName?: string;
   name: string;
   description: string;
   objectType: number;
