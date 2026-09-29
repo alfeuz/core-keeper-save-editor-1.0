@@ -1,0 +1,14 @@
+<div class="talent-grid" [style.grid-template-columns]="'repeat(' + this.columns + ', 1fr)'">
+  <div
+    *ngFor="let cell of this.cells; let i = index"
+    class="talent-cell"
+    [class.empty]="cell === null"
+    [class.locked]="cell !== null && cell.locked && cell.points === 0"
+    [title]="cell ? cell.name + (cell.locked ? ' (locked)' : '') : ''">
+    <img *ngIf="cell" [src]="cell.icon" [alt]="cell.name" class="talent-icon" />
+    <span *ngIf="cell && cell.points > 0" class="talent-points">{{ cell.points }}</span>
+  </div>
+</div>
+<p class="text-xs text-gray-400 mt-1" *ngIf="this.used > 0">
+  {{ this.used }} of {{ this.capacity }} slots
+</p>

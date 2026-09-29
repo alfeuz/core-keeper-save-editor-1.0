@@ -1,0 +1,44 @@
+.talent-grid {
+  @apply grid gap-1;
+  width: 168px;
+}
+
+.talent-cell {
+  @apply relative flex items-center justify-center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 3px solid;
+  background-color: #704b27;
+  image-rendering: pixelated;
+
+  &.empty {
+    background-color: #5a3d1f;
+    border-color: #4a3117;
+  }
+
+  &.locked {
+    background-color: #4a3219;
+    border-color: #3a2712;
+
+    .talent-icon {
+      opacity: 0.3;
+    }
+  }
+}
+
+.talent-icon {
+  width: 70%;
+  height: 70%;
+  image-rendering: pixelated;
+}
+
+.talent-points {
+  --factor: 2;
+  position: absolute;
+  bottom: calc(1px * var(--factor));
+  right: calc(1px * var(--factor));
+  font-size: calc(0.5rem * var(--factor));
+  line-height: calc(0.5rem * var(--factor));
+  text-shadow: calc(-1px * var(--factor)) 0 0 #000,
+    calc(1px * var(--factor)) calc(1px * var(--factor)) 0 #000;
+}

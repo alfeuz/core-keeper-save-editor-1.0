@@ -1,0 +1,33 @@
+<app-card class="!p-4 flex gap-6 items-start">
+  <div class="flex flex-col items-center flex-shrink-0">
+    <app-item
+      class="pointer-events-none"
+      [options]="{ objectID: pet.objectID, scale: 3 }"></app-item>
+    <h3 class="text-xl title-shadow mt-2" [ngStyle]="{ color: pet.rarityColor }">{{ pet.name }}</h3>
+    <p class="text-sm text-gray-300">Level {{ pet.level }} / {{ pet.maxLevel }}</p>
+    <p class="text-xs text-gray-400">
+      {{ pet.spentPoints }} spent<span *ngIf="pet.availablePoints > 0">
+        , {{ pet.availablePoints }} available</span
+      >
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <app-pet-talents [talents]="pet.talents" [spentPoints]="pet.spentPoints"></app-pet-talents>
+
+    <label class="text-sm text-gray-300 flex items-center gap-2">
+      XP
+      <input
+        type="number"
+        class="xp-input appearance-none"
+        [value]="pet.xp"
+        (change)="this.onXpChange($event)" />
+    </label>
+    <p class="text-xs text-gray-400">
+      <ng-container *ngIf="pet.xpToNextLevel > 0; else atMax">
+        {{ pet.xpIntoLevel }} into this level, {{ pet.xpToNextLevel }} to go
+      </ng-container>
+      <ng-template #atMax>at the maximum level</ng-template>
+    </p>
+  </div>
+</app-card>

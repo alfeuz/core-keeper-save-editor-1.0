@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-4" *ngIf="this.pets.length > 0">
+  <app-pet-info
+    *ngFor="let pet of this.pets"
+    [pet]="pet"
+    (xpChange)="this.onXpChange(pet, $event)"></app-pet-info>
+</div>
+<app-card class="w-96" *ngIf="this.pets.length === 0">
+  <p class="text-gray-300">
+    No pets in the inventory yet. Pets are ordinary items, so they can be added from the Items tab
+    under the Pet category.
+  </p>
+</app-card>

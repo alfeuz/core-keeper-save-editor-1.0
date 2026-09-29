@@ -11,6 +11,7 @@
       "~models": ["./src/app/models/index.ts"],
       "~enums": ["./src/app/enums/index.ts"],
       "~services": ["./src/app/services/index.ts"],
+      "~services/*": ["./src/app/services/*"],
       "~env": ["./src/environments/environment.ts"],
       "~data": ["./src/app/data/index.ts"]
     },

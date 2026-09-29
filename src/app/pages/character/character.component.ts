@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { Soul } from '~enums';
+import { SOULS, Soul } from '~enums';
 import { Character } from '~models';
 import { CharacterService } from '~services';
 
@@ -12,16 +12,15 @@ import { CharacterService } from '~services';
   styleUrls: ['./character.component.scss']
 })
 export class CharacterComponent implements OnInit {
+  readonly souls = SOULS;
+
   character: Character;
   currentName: string;
   isHardcore: boolean;
   index: number;
   hasSoulsUnlocked: boolean;
-  hasAzeosUnlocked: boolean;
-  hasOmorothUnlocked: boolean;
-  hasScarabUnlocked: boolean;
-
-  @ViewChild('isHardcoreCheckbox') checkbox: ElementRef<HTMLInputElement>;
+  /** Collected state per soul, keyed by SoulID. */
+  collectedSouls = new Set<Soul>();
 
   constructor(private characterService: CharacterService) {}
 
@@ -30,16 +29,19 @@ export class CharacterComponent implements OnInit {
       this.character = character;
       this.isHardcore = character.characterType === 1;
       this.hasSoulsUnlocked = character.hasUnlockedSouls;
-      this.hasAzeosUnlocked = character.collectedSouls.find(soulId => soulId === 1) != null;
-      this.hasOmorothUnlocked = character.collectedSouls.find(soulId => soulId === 2) != null;
-      this.hasScarabUnlocked = character.collectedSouls.find(soulId => soulId === 3) != null;
+      this.collectedSouls = new Set<Soul>(character.collectedSouls as Soul[]);
+
+      const nameObj =
+        character.characterCustomizationNew?.name || character.characterCustomization?.name;
 
       const encodedBytes = [];
-      for (let i = 0; i < 16; i++) {
-        const lastDigits = String(i).padStart(2, '0');
-        const value = character.characterCustomization.name.bytes.offset0000['byte00' + lastDigits];
-        if (value !== 0) {
-          encodedBytes.push(value);
+      if (nameObj?.bytes?.offset0000) {
+        for (let i = 0; i < 16; i++) {
+          const lastDigits = String(i).padStart(2, '0');
+          const value = nameObj.bytes.offset0000['byte00' + lastDigits];
+          if (value !== 0 && value !== undefined) {
+            encodedBytes.push(value);
+          }
         }
       }
 
@@ -64,15 +66,30 @@ export class CharacterComponent implements OnInit {
     if (encoded.length > 16) {
       target.value = this.currentName;
     } else {
-      const name = this.character.characterCustomization.name;
       this.currentName = target.value;
-      // Also set the length of the name
-      name.utf8LengthInBytes = encoded.length;
-      // We need to apply all the bytes to the offset0000. If encoded.length < 16 we need to fill the rest with 0
-      for (let i = 0; i < 16; i++) {
-        const value = i < encoded.length ? encoded[i] : 0;
-        const lastDigits = String(i).padStart(2, '0');
-        name.bytes.offset0000['byte00' + lastDigits] = value;
+
+      if (this.character.characterCustomization?.name) {
+        const name = this.character.characterCustomization.name;
+        name.utf8LengthInBytes = encoded.length;
+        if (name.bytes?.offset0000) {
+          for (let i = 0; i < 16; i++) {
+            const value = i < encoded.length ? encoded[i] : 0;
+            const lastDigits = String(i).padStart(2, '0');
+            name.bytes.offset0000['byte00' + lastDigits] = value;
+          }
+        }
+      }
+
+      if (this.character.characterCustomizationNew?.name) {
+        const nameNew = this.character.characterCustomizationNew.name;
+        nameNew.utf8LengthInBytes = encoded.length;
+        if (nameNew.bytes?.offset0000) {
+          for (let i = 0; i < 16; i++) {
+            const value = i < encoded.length ? encoded[i] : 0;
+            const lastDigits = String(i).padStart(2, '0');
+            nameNew.bytes.offset0000['byte00' + lastDigits] = value;
+          }
+        }
       }
 
       this.characterService.store();
@@ -113,11 +130,9 @@ export class CharacterComponent implements OnInit {
   onEnableSoulsChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.character.hasUnlockedSouls = target.checked;
-    // Reset the souls when disabling souls generally
+    // Reset every soul we know about when disabling souls generally
     if (!target.checked) {
-      this.hasAzeosUnlocked = false;
-      this.hasOmorothUnlocked = false;
-      this.hasScarabUnlocked = false;
+      this.collectedSouls.clear();
       this.character.collectedSouls = [];
     }
 
@@ -132,23 +147,18 @@ export class CharacterComponent implements OnInit {
   onSoulsChange(event: Event, soul: Soul): void {
     const target = event.target as HTMLInputElement;
     const checked = target.checked;
-    const collectedSouls = this.character.collectedSouls;
     // Reset the disabledSouls when enabling / disabling souls.
     // We don't want the game to be in a wrong state
     this.character.disabledSoulPowers = [];
 
     if (checked) {
-      collectedSouls.push(soul);
-      collectedSouls.sort();
+      this.collectedSouls.add(soul);
     } else {
-      const indexOfSoul = collectedSouls.indexOf(soul);
-      if (indexOfSoul > -1) {
-        // only splice array when item is found
-        // remove one item only
-        collectedSouls.splice(indexOfSoul, 1);
-      }
+      this.collectedSouls.delete(soul);
     }
 
+    // Keep the array in SoulID order so the exported save stays stable
+    this.character.collectedSouls = [...this.collectedSouls].sort((a, b) => a - b);
     this.characterService.store();
   }
 

@@ -14,8 +14,7 @@ import { DebugComponent } from './components/debug/debug.component';
 import { FirstVisitDisclaimerComponent } from './components/dialog/first-visit-disclaimer/first-visit-disclaimer.component';
 import { InaccessibleItemsComponent } from './components/dialog/inaccessible-items/inaccessible-items.component';
 import { TalentTooltipComponent } from './components/talent-tooltip/talent-tooltip.component';
-import { ItemTooltipDirective } from './directives';
-import { TalentTooltipDirective } from './directives/talent-tooltip.directive';
+import { ItemTooltipDirective, TalentTooltipDirective } from './directives';
 import { AboutComponent } from './pages/about/about.component';
 import { CharacterComponent } from './pages/character/character.component';
 import { HelpComponent } from './pages/help/help.component';
@@ -25,6 +24,9 @@ import { ItemBrowserComponent } from './pages/items/components/item-browser/item
 import { ItemDetailComponent } from './pages/items/components/item-detail/item-detail.component';
 import { ItemComponent } from './pages/items/components/item/item.component';
 import { ItemsComponent } from './pages/items/items.page.component';
+import { PetInfoComponent } from './pages/pets/components/pet-info/pet-info.component';
+import { PetTalentsComponent } from './pages/pets/components/pet-talents/pet-talents.component';
+import { PetsPageComponent } from './pages/pets/pets.page.component';
 import { SkillListComponent } from './pages/skill-page/components/skill-list/skill-list.component';
 import { SkillComponent } from './pages/skill-page/components/skill/skill.component';
 import { TalentTreeComponent } from './pages/skill-page/components/talent-tree/talent-tree.component';
@@ -46,6 +48,9 @@ import { InventoryPipe } from './pipes/inventory.pipe';
     TabGroupComponent,
     TabComponent,
     ItemsComponent,
+    PetsPageComponent,
+    PetInfoComponent,
+    PetTalentsComponent,
     SkillPageComponent,
     CharacterComponent,
     ItemDetailComponent,

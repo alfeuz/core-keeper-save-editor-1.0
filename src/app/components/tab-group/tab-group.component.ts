@@ -1,7 +1,15 @@
 import { Component, ContentChildren, QueryList } from '@angular/core';
 
 import { InaccessibleItemsComponent } from '~components/dialog/inaccessible-items/inaccessible-items.component';
-import { CharacterService, DialogService } from '~services';
+import {
+  BASE_BAG_SLOTS,
+  BAG_SLOTS,
+  CharacterService,
+  DialogService,
+  escapeInfinity,
+  TOOLBAR_SLOTS
+} from '~services';
+import { readAppearanceMembers } from '~services/appearance-json';
 
 import { TabComponent } from './tab/tab.component';
 
@@ -34,9 +42,12 @@ export class TabGroupComponent {
     const index = +match[1];
 
     this.readFile(file).then(characterString => {
-      // The json is invalid when the user consumed an amber larva or giant mushroom. This happens because the int duration field gets the value Infinity.
-      const character = JSON.parse(characterString.replace(/Infinity/g, '"%Infinity%"'));
-      this.characterService.setCharacter(character, index);
+      // The json is invalid when the user consumed an amber larva or giant mushroom, because an
+      // int duration field then holds Infinity. Those tokens are swapped for a placeholder so the
+      // file can be parsed, and swapped back on export.
+      const escaped = escapeInfinity(characterString);
+      const character = JSON.parse(escaped);
+      this.characterService.setCharacter(character, index, readAppearanceMembers(escaped));
       this.characterService.store();
     });
   }
@@ -49,7 +60,11 @@ export class TabGroupComponent {
     const bag = this.characterService.$bag.value;
     const bagSize = this.characterService.getBagSize(bag);
 
-    const bagSlots = character.inventory.slice(30 + bagSize, 50);
+    // The bag slots a bigger bag would unlock but the current one does not reach
+    const bagSlots = character.inventory.slice(
+      TOOLBAR_SLOTS + BASE_BAG_SLOTS + bagSize,
+      TOOLBAR_SLOTS + BAG_SLOTS
+    );
     // When we find a slot that is hidden due to a insufficient bag size, we show the dialog.
     let showWarningDialog = false;
     for (const slot of bagSlots) {
@@ -78,16 +93,20 @@ export class TabGroupComponent {
    * Create a invisible a tag and click on it so the user can download the file
    */
   private save(): void {
-    const character = this.characterService.$character.value;
     const index = this.characterService.$index.value;
-    const blob = new Blob([JSON.stringify(character).replace(/"%Infinity%"/g, 'Infinity')], {
+    const blob = new Blob([this.characterService.serialize()], {
       type: 'application/octet-stream'
     });
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
+    link.href = url;
     link.download = `${index}.json`;
+    // The link has to sit in the document for the click to start a download everywhere, and the
+    // url may only be released once the download has been handed over to the browser.
+    document.body.appendChild(link);
     link.click();
-    window.URL.revokeObjectURL(link.href);
+    link.remove();
+    setTimeout(() => window.URL.revokeObjectURL(url), 0);
   }
 
   /**
